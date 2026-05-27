@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void genera_lista_punti(const int& N) {
+void genera_lista_punti(const int& N) { // E' una funzione solo per volendo fare più incapsulamento
 	ofstream coords("coords.txt");
 	ofstream connect("connectivity.txt");
 	
@@ -19,17 +19,24 @@ void genera_lista_punti(const int& N) {
 	auto h = 1.0 / (N + 1);
 	auto n = 1, e = 1;
 
-	for (auto j = 1;j <= N;j++) { // I punti con indice = 0 || N+1 sono quelli sul bordo, non si mettono
-		for (auto i = 1;i <= N;i++) {
+	// I punti con indice = 0 || N+1 sono quelli sul bordo, non si mettono
+	for (auto j = 1;j <= N;j++) { // viaggio in verticale (le y)
+		for (auto i = 1;i <= N;i++) { // viaggio in orizzontale (le x)
 			coords << n << " " << i << " " << j << " " << h * i << " " << h * j << endl;
-			if (i > 1) {
+
+			// gli archi non sono orientati, ne creo solo uno per collegamento
+			if (i > 1) { // se non sono vicino al bordo creo un arco con quello dietro di me
 				connect << e << " " << n << " " << n - 1 << endl;
 				e++;
 			}
-			if (j > 1) {
+			if (j > 1) { // se non sono vicino al bordo creo un arco con quello sopra di me
 				connect << e << " " << n << " " << n - N << endl;
 				e++;
 			}
+			/*
+			costruendo il connect qua faccio in modo che sia ordinato negli n così la fruizione sarà più facile
+			successivamente 
+			*/
 
 			n++;
 		}
@@ -62,7 +69,7 @@ int main() {
 	cout << "Operazione eseguita con successo|" << endl;
 
 	cout << "Premi invio per chiudere..." << endl;
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignora il newline residuo
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	//cin.get();     // Attende un nuovo input
 	return 0;
 }
