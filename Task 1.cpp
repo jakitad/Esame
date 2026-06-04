@@ -66,11 +66,11 @@ int main() {
 
 	genera_lista_punti(N);
 
-	cout << "Operazione eseguita con successo|" << endl;
+	cout << "Operazione eseguita con successo!" << endl;
 
 	cout << "Premi invio per chiudere..." << endl;
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
-	//cin.get();     // Attende un nuovo input
+	cin.get();     // Attende un nuovo input
 	return 0;
 }
 /*

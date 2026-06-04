@@ -12,14 +12,14 @@ Esame (Risolvere il problema delle equazioni del calore):
   Task 2, codice C++: (per avere una matrice bella e facile su cui calcolare)
     prende in input i file di testo generati precedentemente e determina su di essi una partizione, deve essere ricorsiva,
     alternare tra divisioni su x e divisioni su y, salvare l'ordinamento finale su un nuovo file
-      salvo coords su una matrice 2xN^2
+      salvo coords su una matrice 2xN^2 vector
       devo tenere traccia dei nodi che vado a riordinare, prendo in input degli interi che fanno da indici destri e sinistri
-      funzione void, il risultato è scritto sul file di testo o attraverso riferimento (ordering.txt è un array)
+      funzione void, il risultato è ricordato attraverso riferimento (ordering.txt è un vector)
         prendo in input un booleano che mi dice se divido sulle x o sulle y
         prendo in input il primo e l'ultimo indice della serie di punti che devo ordinare
-        ordering.txt deve essere salvato come array dove l'indice dell'array è già una delle due colonne di ordering.txt (m) => anche ordering.txt avrà la colonna m in ordine
+        ordering.txt deve essere salvato come vector dove l'indice del vector è già una delle due colonne di ordering.txt (m) => anche ordering.txt avrà la colonna m in ordine
         viene letta la matrice di coords.txt e i punti vengono divisi nei 3 gruppi(vector)
-        prendo i 3 vector e li memorizzo con l'ordine adeguato nell'array di ordering
+        prendo i 3 vector e li memorizzo con l'ordine adeguato nel vector di ordering
         itero
       fuori dalla funzione salvo tutto sul file di testo in un ciclo apposito
 
