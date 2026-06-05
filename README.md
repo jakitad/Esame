@@ -23,13 +23,12 @@ Esame (Risolvere il problema delle equazioni del calore):
         itero
       fuori dalla funzione salvo tutto sul file di testo in un ciclo apposito
 
-  Task 3, codice C++: A deve avere anche gli 0? A.txt ha N^2 righe, rhs.txt ha N righe, dove deve essere la corrispondenza?
+  Task 3, codice C++: A salvato senza gli 0. rhs.txt ha N righe, dove ogni riga corrisponde alla riga della matrice A.
     genero la matrice A del sistema lineare e il vettore dei termini noti
-      >A ha la diagonale di -4,
-      poi viaggio nel file degli archi e genero 2 punti (simmetrici) per ogni arco facendo attenzione a convertire gli
-      n nel nuovo ordinamento (posso ordinare il file ordering.txt in n in modo da avere costo n e
-      fare un elemento alla volta, MergeSort?),
-      oppure memorizzo ordering.txt in un vector\array? per permetterne la lettura veloce
+      A ha la diagonale di -4.
+      Poi viaggio nel file degli archi, senza salvarlo, e genero 2 punti (simmetrici) per ogni arco facendo attenzione a convertire gli n nel nuovo ordinamento traducendo i punti con il file ordering.txt salvato su vector
+      rhs.txt lo genero guardando prima l'ordering da cui ricavo n, solo lettura senza salvarlo, da coords ricavo le coordinate x ed y, salvato su vector, ottengo il termine noto con la formula di f(x,y).
+      (per aggiungere il contributo del bordo != 0 allora faccio anche un check che i punti siano sul bordo (guardando i e j) o no e poi aggiungo il contributo o no).
 
   Task 4, python:
     legge i file di testo e risolve il sistema lineare

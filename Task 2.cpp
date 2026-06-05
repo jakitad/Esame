@@ -6,13 +6,13 @@ using namespace std;
 
 
 void ordina(const vector<vector<int>>& coords, vector<int>& ordering, int sx, int dx, bool x=true, int depth = 1) {
-    if (dx - sx <= depth) {
+    if (dx - sx <= depth) { // check di non aver raggiunto la fine
         return;
     }
     vector<int> va, vb, vs;
-    if (x) {
+    if (x) { // if per decidere la divisione sulle x o sulle y
         int s = (coords[ordering[dx]][0] + coords[ordering[sx]][0]) / 2; // descriminante sulle i che divide a metà l'insieme
-        for (int k = sx;k <= dx;k++) {
+        for (int k = sx;k <= dx;k++) { // smisto gli insiemi in va, vb e vs
             int i = coords[ordering[k]][0];
             if (i < s) {
                 va.push_back(ordering[k]);
@@ -30,7 +30,7 @@ void ordina(const vector<vector<int>>& coords, vector<int>& ordering, int sx, in
 	}
 	else {
         int s = (coords[ordering[dx]][1] + coords[ordering[sx]][1]) / 2; // descriminante sulle j che divide a metà l'insieme
-        for (int k = sx;k <= dx;k++) {
+        for (int k = sx;k <= dx;k++) { // smisto gli insiemi in va, vb e vs
             int j = coords[ordering[k]][1];
             if (j < s) {
                 va.push_back(ordering[k]);
@@ -47,6 +47,7 @@ void ordina(const vector<vector<int>>& coords, vector<int>& ordering, int sx, in
         }
 	}
 
+    // Ordino gli oggetti nella maniera appropriata nel vector "ordering"
     int o = sx; // sx_va = sx
     int size = va.size();
     for (int h = 0;h < size;h++) {
@@ -74,6 +75,7 @@ void ordina(const vector<vector<int>>& coords, vector<int>& ordering, int sx, in
         return;
     }
 
+    // Itero di processo
     ordina(coords, ordering, sx, sx_vb - 1, !x);
     ordina(coords, ordering, sx_vb, sx_vs - 1, !x);
 }
@@ -88,7 +90,8 @@ int main() {
         return 1;
     }
 
-    vector<vector<int>> coords = { {NULL,NULL} };
+    // lettura del file coords
+    vector<vector<int>> coords = { {NULL,NULL} }; // indice 0 vuoto cosi n coincide con l'indice del vettore 
     int n, i, j;
     float x, y;
     while (file >> n >> i >> j >> x >> y) {
@@ -98,7 +101,7 @@ int main() {
     //cout << coords[0][0] << endl;
     cout << "Lettura completata" << endl;
 
-    vector<int> ordering;
+    vector<int> ordering;  // creazione del vettore di ordering di base
     for (int i = 0;i <= n;i++) {
         ordering.push_back(i);
         //cout << i << ordering[i] << endl;
@@ -108,6 +111,7 @@ int main() {
 
     ordina(coords, ordering, 1, ordering.size() - 1);
 
+    // trascrivo il vettore sul file di testo
     ofstream ordering_file("ordering.txt");
 
     if (!ordering_file.is_open()) {
