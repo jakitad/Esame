@@ -1,20 +1,19 @@
 Esame (Risolvere il problema delle equazioni del calore):
   Task 1, codice C++:
     prende in input N e genera la lista dei punti interni del dominio = [0,1]^2, coords.txt
-      sarà una funzione che genera quello e basta, devo vedere come si genera, funzione void
-        funzione void che viaggia verticalmente e orizzontalmente mappando un punto alla volta in maniera sequenziale
+      sarà una funzione che genera quello e basta, funzione void
+        funzione void che viaggia verticalmente e orizzontalmente con due cicli for uno dentro l'altro mappando un punto alla volta in maniera sequenziale, non viene memorizzato niente perchè viene tutto scritto direttamente
           costo = O(N^2)
 
     genera gli archi dei nodi sopra generati, connectivity.txt
       sarà all'interno della stessa funzione precedente, è ordinato anche negli n1
-        parallelamente alla creazione di coords.txt vengono generati mano a mano gli archi necessari
+        parallelamente alla creazione di coords.txt vengono generati mano a mano gli archi necessari, ovvero l'arco con il punto precedente e l'arco con il punto sovrastante, non viene memorizzato niente perchè viene tutto scritto direttamente
 
-  Task 2, codice C++: (per avere una matrice bella e facile su cui calcolare)
-    prende in input i file di testo generati precedentemente e determina su di essi una partizione, deve essere ricorsiva,
-    alternare tra divisioni su x e divisioni su y, salvare l'ordinamento finale su un nuovo file
-      salvo coords su una matrice 2xN^2 vector
+  Task 2, codice C++: 
+    prende in input il file coords.txt e determina su di essi una partizione, deve essere ricorsiva alternando tra divisioni su x e divisioni su y, salvare l'ordinamento finale su un nuovo file ordering.txt
       devo tenere traccia dei nodi che vado a riordinare, prendo in input degli interi che fanno da indici destri e sinistri
-      funzione void, il risultato è ricordato attraverso riferimento (ordering.txt è un vector)
+      salvo coords su una matrice N^2 x 2 vector dove n è l'indice del vettore e i e j sono memorizzati dentro al vettore
+      funzione void, il risultato è ricordato attraverso riferimento
         prendo in input un booleano che mi dice se divido sulle x o sulle y
         prendo in input il primo e l'ultimo indice della serie di punti che devo ordinare
         ordering.txt deve essere salvato come vector dove l'indice del vector è già una delle due colonne di ordering.txt (m) => anche ordering.txt avrà la colonna m in ordine
@@ -26,9 +25,9 @@ Esame (Risolvere il problema delle equazioni del calore):
   Task 3, codice C++: A salvato senza gli 0. rhs.txt ha N righe, dove ogni riga corrisponde alla riga della matrice A.
     genero la matrice A del sistema lineare e il vettore dei termini noti
       A ha la diagonale di -4.
-      Poi viaggio nel file degli archi, senza salvarlo, e genero 2 punti (simmetrici) per ogni arco facendo attenzione a convertire gli n nel nuovo ordinamento traducendo i punti con il file ordering.txt salvato su vector
-      rhs.txt lo genero guardando prima l'ordering da cui ricavo n, solo lettura senza salvarlo, da coords ricavo le coordinate x ed y, salvato su vector, ottengo il termine noto con la formula di f(x,y).
-      (per aggiungere il contributo del bordo != 0 allora faccio anche un check che i punti siano sul bordo (guardando i e j) o no e poi aggiungo il contributo o no).
+      Poi viaggio nel file degli archi, senza salvarlo, e genero 2 punti (simmetrici) per ogni arco facendo attenzione a convertire gli n nel nuovo ordinamento traducendo i punti con il file ordering.txt salvato su vector come precedentemente
+      rhs.txt lo genero guardando prima l'ordering da cui ricavo n, solo lettura senza salvarlo, da coords ricavo le coordinate x ed y, salvato su vector (come precedentemente ma con x e y al posto di i e j), ottengo il termine noto con la formula di f(x,y).
+      (per aggiungere il contributo del bordo != 0 allora faccio anche un check che i punti siano sul bordo (memorizzando e guardando i e j nel vettore di coords) o no e poi aggiungo il contributo o no.
 
   Task 4, python:
     legge i file di testo e risolve il sistema lineare
