@@ -25,7 +25,7 @@ Esame (Risolvere il problema delle equazioni del calore):
   Task 3, codice C++: A salvato senza gli 0. rhs.txt ha N righe, dove ogni riga corrisponde alla riga della matrice A.
     genero la matrice A del sistema lineare e il vettore dei termini noti
       A ha la diagonale di -4.
-      Poi viaggio nel file degli archi, senza salvarlo, e genero 2 punti (simmetrici) per ogni arco facendo attenzione a convertire gli n nel nuovo ordinamento traducendo i punti con il file ordering.txt salvato su vector come precedentemente
+      Poi viaggio nel file degli archi, senza salvarlo, e genero 2 punti (simmetrici) per ogni arco facendo attenzione a convertire gli n nel nuovo ordinamento traducendo i punti con il file ordering.txt salvato su vector con n indice del vettore e m memorizzato dentro
       rhs.txt lo genero guardando prima l'ordering da cui ricavo n, solo lettura senza salvarlo, da coords ricavo le coordinate x ed y, salvato su vector (come precedentemente ma con x e y al posto di i e j), ottengo il termine noto con la formula di f(x,y).
       (per aggiungere il contributo del bordo != 0 allora faccio anche un check che i punti siano sul bordo (memorizzando e guardando i e j nel vettore di coords) o no e poi aggiungo il contributo o no.
 

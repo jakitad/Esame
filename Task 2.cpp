@@ -92,7 +92,7 @@ int main() {
         return 1;
     }
 
-    // lettura del file coords
+    // lettura del file coords.txt
     vector<vector<int>> coords = { {NULL,NULL} }; // indice 0 vuoto cosi n coincide con l'indice del vettore 
     int n, i, j;
     float x, y;
@@ -102,14 +102,13 @@ int main() {
     }
     //cout << coords[0][0] << endl;
     cout << "Lettura completata" << endl;
+    file.close();
 
     vector<int> ordering;  // creazione del vettore di ordering di base
     for (int i = 0;i <= n;i++) {
         ordering.push_back(i);
         //cout << i << ordering[i] << endl;
     }
-
-    file.close();
 
     ordina(coords, ordering, 1, ordering.size() - 1);
 
