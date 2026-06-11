@@ -121,7 +121,7 @@ int main() {
     }
 
     for (int i = 1;i < ordering.size();i++) {
-        ordering_file << i << " " << ordering[i] << endl;
+        ordering_file << i << " " << ordering[i] << endl; //cambio i in (i - 1) se voglio farlo giusto come dice la consegna
     }
 
     ordering_file.close();

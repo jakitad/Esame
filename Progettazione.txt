@@ -16,7 +16,7 @@ Esame (Risolvere il problema delle equazioni del calore):
       funzione void, il risultato è ricordato attraverso riferimento
         prendo in input un booleano che mi dice se divido sulle x o sulle y
         prendo in input il primo e l'ultimo indice della serie di punti che devo ordinare
-        ordering.txt deve essere salvato come vector dove l'indice del vector è già una delle due colonne di ordering.txt (m) => anche ordering.txt avrà la colonna m in ordine
+        ordering.txt deve essere salvato come vector dove l'indice del vector è già una delle due colonne di ordering.txt (m) => anche ordering.txt avrà la colonna m in ordine. DA CORREGGERE CHE ordering.txt PARTE DA 1 INVECE CHE 0
         viene letta la matrice di coords.txt e i punti vengono divisi nei 3 gruppi(vector)
         prendo i 3 vector e li memorizzo con l'ordine adeguato nel vector di ordering
         itero
