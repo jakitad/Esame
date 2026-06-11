@@ -12,6 +12,7 @@ void ordina(const vector<vector<int>>& coords, vector<int>& ordering, int sx, in
     vector<int> va, vb, vs;
     if (x) { // if per decidere la divisione sulle x o sulle y
         int s = (coords[ordering[dx]][0] + coords[ordering[sx]][0]) / 2; // descriminante sulle i che divide a metà l'insieme
+        // l'indice dx ha l'i minima e l'indice sx ha l'i massima semplicemente perché sono agli estremid del dominio che sto analizzando
         for (int k = sx;k <= dx;k++) { // smisto gli insiemi in va, vb e vs
             int i = coords[ordering[k]][0];
             if (i < s) {
@@ -30,6 +31,7 @@ void ordina(const vector<vector<int>>& coords, vector<int>& ordering, int sx, in
 	}
 	else {
         int s = (coords[ordering[dx]][1] + coords[ordering[sx]][1]) / 2; // descriminante sulle j che divide a metà l'insieme
+        // l'indice dx ha il j minimo e l'indice sx ha il j massimo semplicemente perché sono agli estremid del dominio che sto analizzando
         for (int k = sx;k <= dx;k++) { // smisto gli insiemi in va, vb e vs
             int j = coords[ordering[k]][1];
             if (j < s) {
