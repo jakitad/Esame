@@ -16,7 +16,7 @@ void genera_lista_punti(const int& N) { // E' una funzione solo per volendo fare
 		return;
 	}
 
-	auto h = 1.0 / (N + 1);
+	double h = 1.0 / (N + 1);
 	auto n = 1, e = 1;
 
 	// I punti con indice = 0 || N+1 sono quelli sul bordo, non si mettono

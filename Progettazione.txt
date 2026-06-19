@@ -30,7 +30,8 @@ Esame (Risolvere il problema delle equazioni del calore):
       (per aggiungere il contributo del bordo != 0 allora faccio anche un check che i punti siano sul bordo (memorizzando e guardando i e j nel vettore di coords) o no e poi aggiungo il contributo o no.
 
   Task 4, python:
-    legge i file di testo e risolve il sistema lineare
+    Leggo e risolvo il sistema lineare rappresentato da A.txt e rhs.txt
+    Per rappresentare i risultati leggo i file ordering.txt e coords.txt per ordinare le coppie (i,j) di coords nello stesso ordine in cui sono i risultati del sistema lineare per poi accoppiarli e rappresentali in una heatmap
 
   Task 5:
     verificare i risultati per vari N

@@ -110,7 +110,11 @@ int main() {
         //cout << i << ordering[i] << endl;
     }
 
-    ordina(coords, ordering, 1, ordering.size() - 1);
+    cout << "Ordino?" << endl;
+    bool ok;
+    cin >> ok;
+    if (ok)
+        ordina(coords, ordering, 1, ordering.size() - 1);
 
     // trascrivo il vettore sul file di testo
     ofstream ordering_file("ordering.txt");

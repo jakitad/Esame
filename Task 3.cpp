@@ -83,7 +83,7 @@ int main() {
     }
 
     // genero la diagonale dei termini -4*coef
-    for (i = 1;i <= N;i++) {
+    for (i = 1;i <= m;i++) { // m = n_max
         A << i << " " << i << " " << -4 * coef << endl;
     }
 
