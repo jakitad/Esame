@@ -69,25 +69,25 @@ def read_coords(filename="coords.txt", ordering_file=None):
     i_indices = data[:, 1].astype(int)
     j_indices = data[:, 2].astype(int)
     
-    # Se fornito il file di ordinamento, riordina
-    if ordering_file is not None:
-        ordering_data = np.loadtxt(ordering_file, dtype=int)
-        # ordering_data[:, 0] = nuovi indici (m)
-        # ordering_data[:, 1] = indici originali nel coords.txt (n)
-        
-        # Crea array temporaneo per memorizzare i valori riordinati
-        i_reordered = np.zeros_like(i_indices)
-        j_reordered = np.zeros_like(j_indices)
-        
-        # Riordina secondo il mapping
-        for new_idx, orig_idx in ordering_data:
-            i_reordered[new_idx-1] = i_indices[orig_idx-1] # -1 perchè ho sbagliato
-            j_reordered[new_idx-1] = j_indices[orig_idx-1]
-        
-        i_indices = i_reordered
-        j_indices = j_reordered
+    ordering_data = np.loadtxt(ordering_file, dtype=int)
     
-    return i_indices, j_indices
+    m = ordering_data[:, 0].astype(int)
+    n = ordering_data[:, 1].astype(int)
+    
+    
+    new_i = np.zeros_like(i_indices)
+    new_j = np.zeros_like(i_indices)
+    
+    i=0
+    while(i<m.size):
+        new_i[m[i]-1] = i_indices[n[i]-1]
+        new_j[m[i]-1] = j_indices[n[i]-1]
+        #print(m[i], n[i], new_i[i], new_j[i], f"\n")
+        i+=1
+    
+    
+    return new_i, new_j
+    #return i_indices, j_indices
 
 
 def my_cholesky(A):
@@ -117,13 +117,13 @@ def solve_system(A, rhs):
         u: soluzione del sistema
     """
     # Fattorizzazione di Cholesky di -A
-    L = my_cholesky(-A)
+    R = my_cholesky(-A)
     
     # Risolvi L*y = rhs (sistema triangolare inferiore)
-    y = spsolve_triangular(L, rhs, lower=False)
+    y = spsolve_triangular(R.T, rhs, lower=True)
     
     # Risolvi L^T*u = y (sistema triangolare superiore)
-    u = spsolve_triangular(L.T, y, lower=True)
+    u = spsolve_triangular(R, y, lower=False)
     
     return u
 
@@ -140,8 +140,8 @@ def plot_solution_heatmap(u, i_indices, j_indices, title="Soluzione - Heatmap"):
     
     heatmap = np.full((i_max - i_min, j_max - j_min), np.nan)
     
-    for idx, (i, j) in enumerate(zip(i_indices, j_indices)):
-        heatmap[int(i) - i_min, int(j) - j_min] = u[idx]
+    for idx in range(0,u.size):
+        heatmap[i_indices[idx] - i_min, j_indices[idx] - j_min] = u[idx]
     
     im = ax.imshow(heatmap, cmap='RdBu_r', aspect='auto', origin='upper')
     ax.set_xlabel('j (colonna)', fontsize=12)
@@ -155,6 +155,7 @@ def plot_solution_heatmap(u, i_indices, j_indices, title="Soluzione - Heatmap"):
     return fig, ax
 
 
+
 """
 Programma principale: legge i file, fattorizza, risolve e visualizza
 """
@@ -164,22 +165,17 @@ rhs_file = "rhs.txt"
 coords_file = "coords.txt"
 ordering_file = "ordering.txt"  # File di ordinamento
 
-print("Lettura della matrice A e del termine noto rhs...")
-A = read_sparse_matrix(A_file)
+A = read_sparse_matrix(A_file) # lettura della matrice sparsa
 rhs = read_rhs(rhs_file)
 
 print(f"Dimensione del sistema: {A.shape[0]}")
 print(f"Numero di non-zeri in A: {A.nnz}")
 
-print("\nCalcolo della fattorizzazione di Cholesky...")
 u = solve_system(A, rhs)
 
-print(f"Risoluzione completata!")
 print(f"Norma della soluzione: {np.linalg.norm(u):.6e}")
 
-# Salva la soluzione
-np.savetxt("u.txt", u, fmt="%.10e")
-print("Soluzione salvata in u.txt")
+np.savetxt("u.txt", u, fmt="%.10e") # Salva la soluzione
 
 # Verifica residuo
 residuo = np.linalg.norm(A @ u - rhs) / np.linalg.norm(rhs)
@@ -201,11 +197,8 @@ print(f"Indici i: min={i_indices.min()}, max={i_indices.max()}")
 print(f"Indici j: min={j_indices.min()}, max={j_indices.max()}")
 
 # Visualizza
-print("\nGenerazione del grafico...")
 fig, ax = plot_solution_heatmap(u, i_indices, j_indices)
 
-# Salva la figura
-plt.savefig("soluzione_grid.png", dpi=150, bbox_inches='tight')
-print("Figura salvata in soluzione_grid.png")
+plt.savefig("soluzione_grid.png", dpi=150, bbox_inches='tight') # Salva la figura
 
 plt.show()

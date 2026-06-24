@@ -53,15 +53,15 @@ int main() {
     }
 
     // lettura del file ordering.txt
-    vector<int> ordering;
+    vector<int> ordering = { NULL };
     int m;
-    while (file >> m >> n) {
+    while (file >> m >> n) { 
         // memorizzo ordering.txt
         if (n >= ordering.size()) { // Ridimensiona il vettore se necessario
             ordering.resize(n + 1, -1);  // -1 come valore "vuoto"
             //n_max = n;
         }
-        ordering[n] = m;
+        ordering[n] = m; //SCAMBIO
 
         // scrivo rhs.txt
         rhs << exp(-10*((coords[n][0]* coords[n][0]*h*h) + (coords[n][1] * coords[n][1] * h * h))) << endl;
@@ -105,6 +105,9 @@ int main() {
 
     cout << "Scrittura di A.txt completata" << endl;
 
+    cout << "Premi invio per chiudere..." << endl;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();     // Attende un nuovo input
 	return 0;
 }
 /*

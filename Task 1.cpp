@@ -21,6 +21,8 @@ void genera_lista_punti(const int& N) { // E' una funzione solo per volendo fare
 
 	// I punti con indice = 0 || N+1 sono quelli sul bordo, non si mettono
 	for (auto j = 1;j <= N;j++) { // viaggio in verticale (le y)
+		if (((100 * j) / N) > ((100 * (j - 1)) / N))
+			cout << ((100 * j) / N) << "%" << endl;
 		for (auto i = 1;i <= N;i++) { // viaggio in orizzontale (le x)
 			coords << n << " " << i << " " << j << " " << h * i << " " << h * j << endl;
 

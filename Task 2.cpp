@@ -110,7 +110,7 @@ int main() {
         //cout << i << ordering[i] << endl;
     }
 
-    cout << "Ordino?" << endl;
+    cout << "Ordino? (1 = si, 0 = no)" << endl;
     bool ok;
     cin >> ok;
     if (ok)
