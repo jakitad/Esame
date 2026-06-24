@@ -11,6 +11,9 @@ int main() {
 	double k;
 	cout << "Inserisci il parametro k:";
 	cin >> k;
+    double bordo;
+    cout << "Inserisci la temperatura al bordo della piastra:";
+    cin >> bordo;
 
     ifstream file_2("coords.txt");
 
@@ -63,8 +66,17 @@ int main() {
         }
         ordering[n] = m; //SCAMBIO
 
+        //bordo = static_cast<double>(coords[n][0] + coords[n][1]) / N; // per sperimentare un po'
         // scrivo rhs.txt
-        rhs << exp(-10*((coords[n][0]* coords[n][0]*h*h) + (coords[n][1] * coords[n][1] * h * h))) << endl;
+        if (coords[n][0] == 1 || coords[n][1] == 1 || coords[n][0] == N || coords[n][1] == N) {
+            if ((coords[n][0] == 1 && coords[n][1] == 1) || (coords[n][0] == N && coords[n][1] == N))
+                rhs << exp(-10 * ((coords[n][0] * coords[n][0] * h * h) + (coords[n][1] * coords[n][1] * h * h))) + 2 * coef * bordo << endl;
+            else
+                rhs << exp(-10 * ((coords[n][0] * coords[n][0] * h * h) + (coords[n][1] * coords[n][1] * h * h))) + coef * bordo << endl;
+        }
+        else {
+            rhs << exp(-10 * ((coords[n][0] * coords[n][0] * h * h) + (coords[n][1] * coords[n][1] * h * h))) << endl;
+        }
     }
 
     file.close();
