@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from scipy.sparse import csc_matrix, coo_matrix
 from scipy.sparse.linalg import spsolve_triangular
 from sksparse.cholmod import cholesky
+import time
 
 
 def read_sparse_matrix(filename):
@@ -54,7 +55,7 @@ def read_coords(filename="coords.txt", ordering_file=None):
     Legge le coordinate e gli indici (i, j) dal file coords.txt
     Formato: n i j x y (una riga per nodo)
     
-    Se ordering_file è fornito, riordina le righe secondo il file ordering.txt
+    Riordina le righe secondo il file ordering.txt
     Formato ordering.txt: m n (dove m è nuovo indice, n è indice originale)
     
     Args:
@@ -72,6 +73,7 @@ def read_coords(filename="coords.txt", ordering_file=None):
     ordering_data = np.loadtxt(ordering_file, dtype=int)
     
     m = ordering_data[:, 0].astype(int)
+    m = m + 1
     n = ordering_data[:, 1].astype(int)
     
     
@@ -159,6 +161,7 @@ def plot_solution_heatmap(u, i_indices, j_indices, title="Soluzione - Heatmap"):
 """
 Programma principale: legge i file, fattorizza, risolve e visualizza
 """
+T = time.perf_counter()
 # Parametri dei file
 A_file = "A.txt"
 rhs_file = "rhs.txt"
@@ -175,6 +178,10 @@ u = solve_system(A, rhs)
 
 print(f"Norma della soluzione: {np.linalg.norm(u):.6e}")
 
+T = T - time.perf_counter()
+
+print(f"Tempo di calcolo: {np.linalg.norm(T):.6e}")
+
 np.savetxt("u.txt", u, fmt="%.10e") # Salva la soluzione
 
 # Verifica residuo
@@ -183,14 +190,9 @@ print(f"Residuo relativo: {residuo:.6e}")
 
 # Leggi gli indici (i, j) da coords.txt con riordinamento
 print("\nLettura coordinata grid (i, j) da coords.txt...")
-try:
-    # Prova a leggere con il file di ordinamento
-    i_indices, j_indices = read_coords(coords_file, ordering_file)
-    print(f"Ordinamento da {ordering_file} applicato")
-except FileNotFoundError:
-    # Se non trova il file di ordinamento, usa l'ordinamento naturale
-    print(f"File {ordering_file} non trovato, uso ordinamento naturale")
-    i_indices, j_indices = read_coords(coords_file)
+# Prova a leggere con il file di ordinamento
+i_indices, j_indices = read_coords(coords_file, ordering_file)
+print(f"Ordinamento da {ordering_file} applicato")
 
 print(f"Min(u) = {u.min():.6e}, Max(u) = {u.max():.6e}")
 print(f"Indici i: min={i_indices.min()}, max={i_indices.max()}")

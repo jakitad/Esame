@@ -1,0 +1,25 @@
+Confronto matrici:
+1024:
+-#A = 1048576, #[A(i,j) != 0] = 5238784
+-ordinata: calcolo 15 secondi
+-non ordinata: >10 minuti (mai completato, calcolava usando l'ssd come RAM)
+512:
+-#A = 262144, #[A(i,j) != 0] = 1308672
+-ordinata: 3 secondi
+-non ordinata: 16 secondi
+256:
+-#A = 65536, #[A(i,j) != 0] = 326656
+-ordinata: 0.7 secondi
+-non ordinata: 2 secondi
+128:
+-#A = 16384, #[A(i,j) != 0] = 81408
+-ordinata: 0.18 secondi
+-non ordinata: 0.4 secondi
+64:
+-#A = 4096, #[A(i,j) != 0] = 20224
+-ordinata: 0.05 secondi
+-non ordinata: 0.08 secondi
+32:
+-#A = 1024, #[A(i,j) != 0] = 4992
+-ordinata: 0.03 secondi
+-non ordinata: 0.008 secondi

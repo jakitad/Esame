@@ -1,37 +1,63 @@
+Richieste progettazione:
+- architettura ed obiettivi principali
+-corrispondenza tra documento e codice
+-principali moduli
+-compiti per ciascun modulo
+-strutture dati utilizzate
+-interazioni
+evovolvendo poi in:
+-input e output
+-specifiche
+-complessità attesa
+
+
 Esame (Risolvere il problema delle equazioni del calore):
   Task 1, codice C++:
-    prende in input N e genera la lista dei punti interni del dominio = [0,1]^2, coords.txt
-      sarà una funzione che genera quello e basta, funzione void
-        funzione void che viaggia verticalmente e orizzontalmente con due cicli for uno dentro l'altro mappando un punto alla volta in maniera sequenziale, non viene memorizzato niente perchè viene tutto scritto direttamente
-          costo = O(N^2)
+    prende in input N e genera la lista dei punti interni del dominio(= [0,1]^2) salvandola su coords.txt
+    funzione void (non deve restituire niente se non salvare i dati sul .txt)
+      funzione void che viaggia verticalmente e orizzontalmente con due cicli for annidati mappando un punto alla volta in maniera sequenziale, non viene memorizzato niente perchè viene tutto scritto direttamente
+      costo = O(N^2)
 
-    genera gli archi dei nodi sopra generati, connectivity.txt
-      sarà all'interno della stessa funzione precedente, è ordinato anche negli n1
+    genera gli archi dei nodi creati sopra salvandoli su connectivity.txt
+      nella stessa funzione precedente, per costruzione è ordinato anche negli n1
         parallelamente alla creazione di coords.txt vengono generati mano a mano gli archi necessari, ovvero l'arco con il punto precedente e l'arco con il punto sovrastante, non viene memorizzato niente perchè viene tutto scritto direttamente
 
   Task 2, codice C++: 
     prende in input il file coords.txt e determina su di essi una partizione, deve essere ricorsiva alternando tra divisioni su x e divisioni su y, salvare l'ordinamento finale su un nuovo file ordering.txt
-      devo tenere traccia dei nodi che vado a riordinare, prendo in input degli interi che fanno da indici destri e sinistri
+      la funzione è ricorsiva quindi devo tenere traccia dei nodi che vado a riordinare, prendo in input degli interi che fanno da indici destri e sinistri della sezione che ho riordinato
       salvo coords su una matrice N^2 x 2 vector dove n è l'indice del vettore e i e j sono memorizzati dentro al vettore
+      genero il vettore di ordering che parte con l'ordinamento naturale, l'indice del vector è già una delle due colonne di ordering.txt (m), (ordering.txt avrà la colonna m in ordine).
       funzione void, il risultato è ricordato attraverso riferimento
         prendo in input un booleano che mi dice se divido sulle x o sulle y
         prendo in input il primo e l'ultimo indice della serie di punti che devo ordinare
-        ordering.txt deve essere salvato come vector dove l'indice del vector è già una delle due colonne di ordering.txt (m) => anche ordering.txt avrà la colonna m in ordine. DA CORREGGERE CHE ordering.txt PARTE DA 1 INVECE CHE 0
+        prendo in input la matrice generata da coords.txt
         viene letta la matrice di coords.txt e i punti vengono divisi nei 3 gruppi(vector)
         prendo i 3 vector e li memorizzo con l'ordine adeguato nel vector di ordering
-        itero
+        itero per le il primo e il secondo insieme (V_1 e V_2)
+        costo = O(N^2)
       fuori dalla funzione salvo tutto sul file di testo in un ciclo apposito
+      costo = O(N^2)
 
-  Task 3, codice C++: A salvato senza gli 0. rhs.txt ha N righe, dove ogni riga corrisponde alla riga della matrice A.
+  Task 3, codice C++: A salvata senza gli 0. rhs.txt ha N righe, dove ogni riga corrisponde alla riga della matrice A.
     genero la matrice A del sistema lineare e il vettore dei termini noti
-      A ha la diagonale di -4.
-      Poi viaggio nel file degli archi, senza salvarlo, e genero 2 punti (simmetrici) per ogni arco facendo attenzione a convertire gli n nel nuovo ordinamento traducendo i punti con il file ordering.txt salvato su vector con n indice del vettore e m memorizzato dentro
-      rhs.txt lo genero dopo aver memorizzato coords, mentre memorizzo ordering, sfrutto il fatto che ordering abbia gli m in ordine e piano piano che memorizzo ordering intanto scrivo rhs facendo x=h*i ecc.
-      (per aggiungere il contributo del bordo != 0 allora faccio anche un check che i punti siano sul bordo (memorizzando e guardando i e j nel vettore di coords) o no e poi aggiungo il contributo o no.
+      salvo coords su una matrice N^2 x 2 vector dove n è l'indice del vettore e i e j sono memorizzati dentro al vettore.
+      memorizzo anche h ed N che deduco dalla lettura di coords.txt
+      salvo il file ordering.txt come vector con n indice del vettore e m memorizzato dentro
+      rhs.txt lo genero dopo aver memorizzato coords, mentre memorizzo ordering, sfrutto il fatto che ordering abbia gli m in ordine e piano piano scrivo rhs sapendo che x=h*i e y=h*j.
+      per aggiungere il contributo del bordo != 0 controllo se i punti sono sul bordo (memorizzando e guardando i e j nel vettore di coords) ed eventualmente aggiungo il contributo.
+      costo = O(N^2)
+
+      A ha sulla diagonale gli elementi -4*coef, la genero
+      poi viaggio nel file degli archi, senza salvarlo, e genero 2 punti (simmetrici) per ogni arco facendo attenzione a convertire gli n nel nuovo ordinamento traducendo i punti con il vettore estratto da ordering.txt
+      costo = O(#connectivity.txt) = O(2*N^2)
+      
 
   Task 4, python:
-    Leggo e risolvo il sistema lineare rappresentato da A.txt e rhs.txt
-    Per rappresentare i risultati leggo i file ordering.txt e coords.txt per ordinare le coppie (i,j) di coords nello stesso ordine in cui sono i risultati del sistema lineare per poi accoppiarli e rappresentali in una heatmap
+    leggo e risolvo il sistema lineare rappresentato da A.txt e rhs.txt
+      leggo le colonne di A con la funzione di numpy, creo la matrice in COOrdinate format, la converto in Compressed Sparse Column format
+      leggo rhs.txt con la funzione di numpy
+      risolvo il sistema -A*u = rhs <==> -(L*L.T)*u = rhs <==> L.T*u=y and -L*y = rhs, utilizzando le funzioni spsolve_triangular() e cholesky() per trovare la matrice triangolare
+    per rappresentare i risultati leggo i file ordering.txt e coords.txt per ordinare le coppie (i,j) di coords nello stesso ordine in cui sono i risultati del sistema lineare per poi accoppiarli e rappresentarli in una heatmap
 
   Task 5:
-    verificare i risultati per vari N
+    verifico i risultati per vari N e salvo i risultati confrontando il calcolo ordinato e non.

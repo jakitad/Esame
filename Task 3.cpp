@@ -23,13 +23,13 @@ int main() {
         return 1;
     }
 
-    // lettura del file coords
+    // lettura del file coords salvando coords = vector {i, j}
     vector<vector<int>> coords = { {NULL,NULL} }; // indice 0 vuoto cosi n coincide con l'indice del vettore 
     int n, i, j;
     double x, y;
     file_2 >> n >> i >> j >> x >> y;
     coords.push_back({ i,j });
-    double h = x;
+    double h = x; // salvo il valore di h alla prima iterazione
     while (file_2 >> n >> i >> j >> x >> y) {
         //cout << x << "," << y << endl;
         coords.push_back({ i,j });
@@ -59,6 +59,7 @@ int main() {
     vector<int> ordering = { NULL };
     int m;
     while (file >> m >> n) { 
+        m += 1; // per correggere e avere gli indici da 0 a N^2 - 1
         // memorizzo ordering.txt
         if (n >= ordering.size()) { // Ridimensiona il vettore se necessario
             ordering.resize(n + 1, -1);  // -1 come valore "vuoto"
